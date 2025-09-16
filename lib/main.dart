@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expressions/expressions.dart'; // External package for expression evaluationer
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -55,8 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String calculatorEntries="";
   bool readIntoNextSlot = true; 
   CalculatorData calculatorInfoFields = CalculatorData();
-  Set<String> validOperations = {"*","/","+","-"};
-  Map<String, double Function(double, double)> arithmeticFunction = {"*": (double v1, double v2)=>v1*v2,
+  Set<String> validOperations = {"^","*","/","+","-"};
+  Map<String, double Function(double, double)> arithmeticFunction = {
+    "^": (double v1, double v2)=>(pow(v1,v2)).toDouble() ,
+    "*": (double v1, double v2)=>v1*v2,
     "/": (double v1, double v2)=>v1/v2,
     "-": (double v1, double v2)=>v1-v2,
     "+": (double v1, double v2)=>v1+v2,};
@@ -248,8 +251,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   getCaculatorButton(calculatorInfoFields, "0",ModifyCalculatorStringRebuild),
                   getCaculatorButton(calculatorInfoFields, "C",clearFields),
-                  getCaculatorButton(calculatorInfoFields, "E",evaluateExpression),
+                  getCaculatorButton(calculatorInfoFields, "=",evaluateExpression),
                   getCaculatorButton(calculatorInfoFields, "/",ModifyCalculatorStringRebuild)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,         
+                children: [
+                  getCaculatorButton(calculatorInfoFields, "^",ModifyCalculatorStringRebuild),
                 ],
               )
                 ],
